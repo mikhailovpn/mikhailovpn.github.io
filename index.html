@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2021 by mikhailovpn (http://jsbin.com/rivibor/2/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Тема 7. Задание 2. Техники тест-дизайна</title>
+</head>
+<body>
+  <div>
+    <p>Стоимость 1 кВт·ч при многотарифном учете с применением тарифа, дифференцированного по зонам
+      суток:</br>
+  <ul>
+    <li>ночная зона Т2 (с 23:00 до 7:00 включительно) - 2,32р.</li>
+    <li>пиковая зона Т1 (с 7:00 до 10:00 включительно; с 17:00 до 21:00 включительно) = 6,79р.</li>
+    <li>полупиковая зона Т3 (10:00-17:00 включительно; 21:00-23:00 включительно) - 5,66р.</li>
+  </ul>
+      Учет времени в системе ведется по минутам, то есть за шаг принимаем 1 минуту</p>
+  </div>
+  </br>
+  <div>
+    <p><b>Введите время потребления энергии</br>
+      (от 00:00 до 23:59)</b></p>
+  <p>ЧЧ</br><input type="text" id="hourInput"></input></br>
+    ММ</br><input type="text" id="minuteInput"></input></br></p?
+  </div>
+    <p><input type="button" onclick="javascript: calculateRateWithManyDefects(); return false;" value="Подсчитать тариф (в коде серьезная ошибка)"/></p>
+    <p><input type="button" onclick="javascript: calculateRateWithSomeDefects(); return false;" value="Подсчитать тариф (код с небольшими недоработками)"/></p>
+    <p><input type="button" onclick="javascript: calculateRate(); return false;" value="Подсчитать тариф (код без (?) ошибок)"</p>
+
+<script id="jsbin-javascript">
+//тестовый  
+var startE1Time = new Date();
+  startE1Time.setHours(7, 0);
+  var startE2Time = new Date();
+  startE2Time.setHours(10, 0);
+  var startE3Time = new Date();
+  startE3Time.setHours(17, 0);
+  var startE4Time = new Date();
+  startE4Time.setHours(21, 0);
+  var startE5Time = new Date();
+  startE5Time.setHours(23, 0);
+
+  var costT1 = "пиковая зона Т1 (с 7:00 до 10:00 включительно; с 17:00 до 21:00 включительно) = 6,79р";
+  var costT2 = "ночная зона Т2 (с 23:00 до 7:00 включительно) - 2,32р";
+  var costT3 = "полупиковая зона Т3 (10:00-17:00 включительно; 21:00-23:00 включительно) - 5,66р.";
+
+function calculateRate() {
+  var timeHour = document.querySelector("#hourInput").value;
+  var timeMinute = document.querySelector("#minuteInput").value;
+  var inputTime = new Date();
+  var rate;
+  
+  inputTime.setHours(timeHour, timeMinute, 0);
+  
+  if (inputTime > startE1Time && inputTime <= startE2Time) {
+    rate = costT1;
+  } 
+  else if (inputTime > startE2Time && inputTime <= startE3Time) {
+    rate = costT3;
+  } 
+  else if (inputTime > startE3Time && inputTime <= startE4Time) {
+    rate = costT1;
+  }
+  else if(inputTime > startE4Time && inputTime <= startE5Time) {
+    rate = costT3;
+  }
+  else {
+    rate = costT2;
+  }
+  alert(rate);
+}
+
+function calculateRateWithSomeDefects() {
+  var timeHour = document.querySelector("#hourInput").value;
+  var timeMinute = document.querySelector("#minuteInput").value;
+  var inputTime = new Date();
+  var rate;
+  
+  inputTime.setHours(timeHour,timeMinute);
+  
+  if (inputTime > startE1Time && inputTime < startE2Time) {
+    rate = costT1;
+  } 
+  else if (inputTime >= startE2Time && inputTime <= startE3Time) {
+    rate = costT3;
+  } 
+  else if (inputTime > startE3Time && inputTime < startE4Time) {
+    rate = costT1;
+  }
+  else if(inputTime >= startE4Time && inputTime <= startE5Time) {
+    rate = costT3;
+  }
+  else {
+    rate = costT2;
+  }
+  alert(rate);
+}
+
+function calculateRateWithManyDefects() {
+  var timeHour = document.querySelector("#hourInput").value;
+  var timeMinute = document.querySelector("#minuteInput").value;
+  var inputTime = new Date();
+  var rate;
+  
+  inputTime.setHours(timeHour,timeMinute,0);
+  
+  if (inputTime > startE1Time && inputTime < startE2Time) {
+    rate = costT1;
+  } 
+  else if (inputTime > startE2Time && inputTime <= startE3Time) {
+    rate = costT3;
+  } 
+  else if (inputTime > startE3Time) {
+    rate = costT1;
+  }
+  else if(inputTime >= startE4Time && inputTime <= startE5Time) {
+    rate = costT3;
+  }
+  else {
+    rate = costT2;
+  }
+  alert(rate);
+}
+
+
+
+</script>
+</body>
+</html>
